@@ -8,9 +8,9 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: 'bg-chili-500 text-white shadow-md hover:bg-chili-600',
-        secondary: 'bg-rice-200 text-charcoal-900 hover:bg-amber-100',
-        outline: 'border border-charcoal-900/10 bg-white text-charcoal-900 hover:border-chili-500/30 hover:bg-chili-50',
-        ghost: 'text-charcoal-700 hover:bg-rice-200',
+        secondary: 'bg-rice-200 text-charcoal-900 hover:bg-amber-100 dark:bg-night-800 dark:text-rice-50 dark:hover:bg-amber-100/20',
+        outline: 'border border-charcoal-900/10 bg-white text-charcoal-900 hover:border-chili-500/30 hover:bg-chili-50 dark:bg-night-900 dark:text-rice-50 dark:hover:bg-chili-500/15',
+        ghost: 'text-charcoal-700 hover:bg-rice-200 dark:text-rice-200 dark:hover:bg-night-800',
       },
       size: { default: 'h-11 px-5', sm: 'h-9 rounded-lg px-3', icon: 'h-11 w-11 p-0' },
     },
