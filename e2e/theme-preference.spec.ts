@@ -116,6 +116,7 @@ test.describe('夜间暗黑模式 - E2E 验收测试', () => {
     await openThemeDialog(page)
     await chooseTheme(page, /暗黑模式/)
     await expectResolvedTheme(page, 'dark')
+    await page.keyboard.press('Escape')
     await expect(page.getByRole('heading', { name: '鎏金番茄鸳鸯锅' })).toBeVisible()
   })
 
@@ -124,6 +125,7 @@ test.describe('夜间暗黑模式 - E2E 验收测试', () => {
     await openThemeDialog(page)
     await chooseTheme(page, /暗黑模式/)
     await expectResolvedTheme(page, 'dark')
+    await page.keyboard.press('Escape')
 
     await page.getByRole('button', { name: '会员与排号' }).click()
     await expect(page.getByRole('heading', { name: '会员与排号' })).toBeVisible()
@@ -131,7 +133,7 @@ test.describe('夜间暗黑模式 - E2E 验收测试', () => {
 
     await page.getByRole('button', { name: '呼叫服务' }).click()
     await expect(page.getByRole('heading', { name: '桌边服务' })).toBeVisible()
-    await expect(page.getByText('暂无服务记录')).toBeVisible()
+    await expect(page.getByText('暂无呼叫，服务员正在附近巡台。')).toBeVisible()
     await page.keyboard.press('Escape')
 
     await page.getByRole('button', { name: '演示控制台' }).click()
