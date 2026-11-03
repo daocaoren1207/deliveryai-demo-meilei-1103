@@ -1,8 +1,9 @@
-import { Accessibility, Crown, Languages, LayoutDashboard, MapPin, PhoneCall, ReceiptText, Search, UserRound } from 'lucide-react'
+import { Accessibility, Check, Crown, Languages, LayoutDashboard, MapPin, Moon, Monitor, PhoneCall, ReceiptText, Search, Sun, UserRound } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { tableAreas } from '@/data/menu'
+import type { ResolvedTheme, ThemePreference } from '@/hooks/useThemePreference'
 import type { ViewName } from '@/types'
 
 interface TopBarProps {
@@ -11,6 +12,9 @@ interface TopBarProps {
   serviceCount: number
   language: string
   elderly: boolean
+  themePreference: ThemePreference
+  resolvedTheme: ResolvedTheme
+  onThemePreferenceChange: (preference: ThemePreference) => void
   onToggleLanguage: () => void
   onToggleElderly: () => void
   onView: (view: ViewName) => void
@@ -18,17 +22,22 @@ interface TopBarProps {
   onConsole: () => void
 }
 
-export function TopBar({ table, view, serviceCount, language, elderly, onToggleLanguage, onToggleElderly, onView, onService, onConsole }: TopBarProps) {
+export function TopBar({ table, view, serviceCount, language, elderly, themePreference, resolvedTheme, onThemePreferenceChange, onToggleLanguage, onToggleElderly, onView, onService, onConsole }: TopBarProps) {
   const { t } = useTranslation()
   const areaKey = tableAreas[table]
   const tableLabel = areaKey ? `${table} · ${t(areaKey)}` : table
+  const themeOptions: Array<{ value: ThemePreference; icon: typeof Monitor }> = [
+    { value: 'system', icon: Monitor },
+    { value: 'light', icon: Sun },
+    { value: 'dark', icon: Moon },
+  ]
 
   return (
     <>
       <div className="bg-charcoal-900 px-4 py-2 text-center text-xs font-semibold tracking-wide text-rice-100">
         {t('common.banner')}
       </div>
-      <header className="sticky top-0 z-30 border-b border-charcoal-900/5 bg-rice-50/95 backdrop-blur-xl">
+      <header className="sticky top-0 z-30 border-b border-charcoal-900/5 bg-rice-50/95 backdrop-blur-xl dark:bg-night-900/95">
         <div className="mx-auto flex h-16 max-w-7xl items-center gap-3 px-4 lg:px-6">
           <button onClick={() => onView('menu')} className="flex items-center gap-2 text-left">
             <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-chili-500 text-lg font-black text-white shadow-md">{t('common.brand')}</span>
@@ -40,7 +49,7 @@ export function TopBar({ table, view, serviceCount, language, elderly, onToggleL
             <Button variant={view === 'order' ? 'secondary' : 'ghost'} size="sm" onClick={() => onView('order')}><ReceiptText size={16} />{t('common.nav_order')}</Button>
           </nav>
           <Button variant="outline" size="icon" onClick={onService} className="relative" aria-label={t('common.aria_service')}>
-            <PhoneCall size={18} />{serviceCount > 0 && <span className="absolute -right-1 -top-1 h-3 w-3 rounded-full border-2 border-white bg-chili-500" />}
+            <PhoneCall size={18} />{serviceCount > 0 && <span className="absolute -right-1 -top-1 h-3 w-3 rounded-full border-2 border-white bg-chili-500 dark:border-night-900" />}
           </Button>
           <Dialog>
             <DialogTrigger asChild><Button variant="outline" size="icon" aria-label={t('common.aria_member')}><UserRound size={18} /></Button></DialogTrigger>
@@ -56,6 +65,38 @@ export function TopBar({ table, view, serviceCount, language, elderly, onToggleL
             </DialogContent>
           </Dialog>
           <Button variant="outline" size="icon" onClick={onConsole} aria-label={t('common.aria_console')}><LayoutDashboard size={18} /></Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="outline" size="icon" aria-label={t('common.aria_theme')}>
+                {resolvedTheme === 'dark' ? <Moon size={18} /> : <Sun size={18} />}
+              </Button>
+            </DialogTrigger>
+            <DialogContent title={t('common.theme_title')}>
+              <p className="mt-2 text-sm text-charcoal-500">
+                {t('common.theme_current', { theme: t(`common.theme_${themePreference}`), resolved: t(`common.theme_resolved_${resolvedTheme}`) })}
+              </p>
+              <div className="mt-5 grid gap-3">
+                {themeOptions.map(({ value, icon: Icon }) => {
+                  const selected = themePreference === value
+                  return (
+                    <button
+                      key={value}
+                      onClick={() => onThemePreferenceChange(value)}
+                      className={`flex items-center gap-3 rounded-2xl border p-4 text-left font-semibold transition ${selected ? 'border-chili-500 bg-chili-50 text-chili-600' : 'border-charcoal-900/5 bg-white text-charcoal-700 hover:border-chili-500/30 hover:bg-chili-50'}`}
+                    >
+                      <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-rice-100 text-chili-500">
+                        <Icon size={20} />
+                      </span>
+                      <span className="flex-1">
+                        <span className="block text-sm">{t(`common.theme_${value}`)}</span>
+                      </span>
+                      {selected && <Check size={18} />}
+                    </button>
+                  )
+                })}
+              </div>
+            </DialogContent>
+          </Dialog>
           <Button variant="outline" size="icon" onClick={onToggleElderly} aria-label={elderly ? '切换至常规模式' : '切换至老人模式'}>
             <Accessibility size={18} className={elderly ? 'text-chili-500' : ''} />
           </Button>

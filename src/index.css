@@ -4,11 +4,14 @@
 @tailwind utilities;
 
 :root { color: #211f1c; background: #fbf5ea; font-synthesis: none; }
+:root.dark { color: #fffdf8; background: #15110f; }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body { margin: 0; min-width: 320px; min-height: 100vh; background: #fbf5ea; }
+.dark body { background: #15110f; color: #fffdf8; }
 button, input { font: inherit; }
 ::selection { background: #ffddd8; color: #a9231a; }
+.dark ::selection { background: rgb(225 59 43 / 0.4); color: #fffdf8; }
 
 /* 老人模式全局基础：放大字号约 1.25 倍 */
 .elderly { font-size: 125%; }
@@ -36,5 +39,113 @@ html * {
     background-image: radial-gradient(rgba(170, 110, 60, .08) .7px, transparent .7px);
     background-size: 12px 12px;
   }
+  .dark .paper-noise {
+    background-image:
+      radial-gradient(rgba(245, 184, 63, .08) .7px, transparent .7px),
+      linear-gradient(180deg, rgba(225, 59, 43, .06), transparent 28rem);
+  }
   .scrollbar-none::-webkit-scrollbar { display: none; }
+
+  .dark .bg-rice-50,
+  .dark .bg-rice-100,
+  .dark .bg-rice-100\/95,
+  .dark .bg-white,
+  .dark .bg-white\/80,
+  .dark .bg-white\/90,
+  .dark .bg-white\/95 {
+    background-color: #201a16;
+  }
+
+  .dark .bg-rice-200,
+  .dark .bg-white\/55 {
+    background-color: #2b241f;
+  }
+
+  .dark .bg-chili-50,
+  .dark .bg-chili-100 {
+    background-color: rgb(225 59 43 / 0.16);
+  }
+
+  .dark .bg-amber-100,
+  .dark .bg-amber-100\/70 {
+    background-color: rgb(245 184 63 / 0.16);
+  }
+
+  .dark .bg-emerald-50 {
+    background-color: rgb(16 185 129 / 0.16);
+  }
+
+  .dark .text-charcoal-900 {
+    color: #fffdf8;
+  }
+
+  .dark .text-charcoal-700 {
+    color: #f3e6d0;
+  }
+
+  .dark .text-charcoal-500 {
+    color: rgb(243 230 208 / 0.78);
+  }
+
+  .dark .text-chili-500,
+  .dark .text-chili-600 {
+    color: #ff8f83;
+  }
+
+  .dark .text-amber-500 {
+    color: #f5b83f;
+  }
+
+  .dark .text-emerald-600 {
+    color: #6ee7b7;
+  }
+
+  .dark .border-charcoal-900\/5,
+  .dark .border-charcoal-900\/10,
+  .dark .border-white\/80 {
+    border-color: rgb(255 255 255 / 0.1);
+  }
+
+  .dark .border-chili-500\/20,
+  .dark .border-chili-500\/30,
+  .dark .hover\:border-chili-500\/30:hover {
+    border-color: rgb(255 143 131 / 0.35);
+  }
+
+  .dark .border-amber-400\/30 {
+    border-color: rgb(245 184 63 / 0.35);
+  }
+
+  .dark .shadow-card,
+  .dark .shadow-sm,
+  .dark .shadow-md {
+    box-shadow: 0 14px 34px rgb(0 0 0 / 0.38);
+  }
+
+  .dark .shadow-float {
+    box-shadow: 0 20px 60px rgb(0 0 0 / 0.48);
+  }
+
+  .dark input {
+    color: #fffdf8;
+  }
+
+  .dark input::placeholder {
+    color: rgb(243 230 208 / 0.58);
+  }
+
+  .dark .focus\:ring-chili-50:focus {
+    --tw-ring-color: rgb(225 59 43 / 0.22);
+  }
+
+  .dark .hover\:bg-rice-200:hover,
+  .dark .hover\:bg-chili-50:hover {
+    background-color: #2b241f;
+  }
+
+  .dark .bg-amber-400.text-charcoal-900,
+  .dark .bg-amber-400 .text-charcoal-900,
+  .dark .bg-rice-200.text-charcoal-900 {
+    color: #211f1c;
+  }
 }
